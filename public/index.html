@@ -2,11 +2,11 @@
 <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
 <script>
   var socket = io();
-  $('form').submit(function(){
+  function sendMessage(){
     socket.emit('chat message', $('#m').val());
     $('#m').val('');
     return false;
-  });
+  }
   socket.on('chat message', function(msg){
     $('#messages').append($('<li>').text(msg));
   });
@@ -14,7 +14,5 @@
 <ul id="messages">
 
 </ul>
-<form>
 <input id="m" type="text">
-<button type="submit">Send</button>
-</form>
+<button onclick="sendMessage()">Send</button>
