@@ -18,7 +18,6 @@
   "homepage": "https://github.com/DmitryAB/nodechat",
   "dependencies": {
 		"socket.io": "latest",
-		"express": "latest",
-		"jade": "latest"
+		"express": "latest"
   }
 }
