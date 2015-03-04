@@ -3,19 +3,27 @@
 <script>
   var socket = io();
 
-  function sendMessage(){
+  function sendMessage() {
     socket.emit('chat message', $('#m').val());
     $('#m').val('');
     return false;
   }
-
-  socket.on('chat message', function(msg){
+  function setName() {
+    var name = prompt("Type your name");
+    if (name) {
+      socket.emit('set name', name);
+      $('#username').text('You are ' + name);
+    }
+  }
+  socket.on('chat message', function(msg) {
     $('#messages').append($('<li>').text(msg));
   });
 </script>
 <ul id="messages">
 
 </ul>
+<span id="username">You are Guest</span>
 <input id="m" type="text">
 <button onclick="sendMessage();">Send</button>
 <button onclick="$('#messages').html('');">Clear</button>
+<button onclick="setName()">Set name</button>
