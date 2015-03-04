@@ -4,6 +4,9 @@ var http = require('http').Server(app);
 var io = require('socket.io')(http);
 
 var GUEST_NAME = 'Guest';
+var MESS_TAG_OPEN = '<li>';
+var MY_MESS_TAG_OPEN = '<li id="my">';
+var MESS_TAG_CLOSE = '</li>';
 
 app.use(express.static('public'));
 
@@ -20,7 +23,8 @@ io.on('connection', function(socket) {
 
   socket.on('chat message', function(msg) {
     console.log('message: ' + msg);
-    io.sockets.emit('chat message', (socket.username || GUEST_NAME) + ': ' + msg);
+    socket.broadcast.emit('chat message', MESS_TAG_OPEN + (socket.username || GUEST_NAME) + ': ' + msg + MESS_TAG_CLOSE);
+    socket.emit('chat message', MY_MESS_TAG_OPEN + (socket.username || GUEST_NAME) + ': ' + msg + MESS_TAG_CLOSE);
   });
 
   socket.on('set name', function(name) {
